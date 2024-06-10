@@ -21,7 +21,7 @@ CFLAGS= -Wall -Wextra -Werror
 ### LIBFT
 
 LIBFT = libft.a
-LIBFT_DIR = libft
+LIBFT_DIR = Libft
 
 ### UTILS
 
