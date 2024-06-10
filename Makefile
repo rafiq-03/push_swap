@@ -6,7 +6,7 @@
 #    By: rmarzouk <rmarzouk@student.1337.ma>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/02 23:16:38 by rmarzouk          #+#    #+#              #
-#    Updated: 2024/05/01 18:16:58 by rmarzouk         ###   ########.fr        #
+#    Updated: 2024/06/10 11:44:31 by rmarzouk         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ LIBFT_DIR = libft
 ### UTILS
 
 UTILS_DIR = Mandatory/
-UTILS_S = $(addprefix $(UTILS_DIR), init_stack_a.c	\
+UTILS_S = $(addprefix $(UTILS_DIR), push_swap.c 	\
+									init_stack_a.c	\
 									make_stack_a.c	\
 									check_num.c		\
 									ft_swap.c		\
@@ -42,6 +43,7 @@ UTILS_O = $(UTILS_S:.c=.o)
 B_UTILS_DIR = Bonus/
 B_UTILS_S = $(addprefix $(B_UTILS_DIR),gnl/get_next_line.c		\
 									gnl/get_next_line_utils.c	\
+									checker_bonus.c				\
 									init_stack_a_bonus.c		\
 									make_stack_a_bonus.c		\
 									check_num_bonus.c			\
@@ -54,18 +56,18 @@ B_UTILS_O = $(B_UTILS_S:.c=.o)
 
 all: $(NAME) 
 
-$(NAME): mandatory/$(NAME).c $(UTILS_O) mandatory/push_swap.h
+$(NAME): $(UTILS_O)
 	@make -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) $(LIBFT_DIR)/$(LIBFT) $(UTILS_O) mandatory/$(NAME).c -o $(NAME)
+	@$(CC) $(CFLAGS) $(UTILS_O) -L$(LIBFT_DIR) -lft -o $(NAME)
 
 bonus:$(BNAME)
 
-$(BNAME):Bonus/$(BNAME)_bonus.c $(B_UTILS_O) Bonus/checker_bonus.h
+$(BNAME): $(B_UTILS_O)
 	@make -C $(LIBFT_DIR)
-	@$(CC) $(CFLAGS) $(LIBFT_DIR)/$(LIBFT) $(B_UTILS_O) Bonus/$(BNAME)_bonus.c -o $(BNAME)	
+	@$(CC) $(CFLAGS)  $(B_UTILS_O)  -L$(LIBFT_DIR) -lft -o $(BNAME)	
 #_________________________________________________________
 
-%.o:%.c
+%.o:%.c Mandatory/push_swap.h Bonus/checker_bonus.h
 	@${CC} ${CFLAGS} -c $< -o $@
 
 clean:
